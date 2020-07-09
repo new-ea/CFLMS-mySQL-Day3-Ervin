@@ -1,0 +1,90 @@
+1. Report:
+How many rows do we have in each table in the employees database?
+Solution:
+SELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'employees' 
+
+2. Report:
+How many employees with the first name "Mark" do we have in our company?
+Solution:
+SELECT COUNT(first_name) FROM employees WHERE first_name = "MARK" 
+
+
+3. Report:
+How many employees with the first name "Eric" and the last name beginning with "A" do we have in our company?
+Solution:
+SELECT (first_name) FROM employees WHERE first_name = "ERIC" AND last_name LIKE 'a%' 
+
+4. Report:
+How many employees do we have that are working for us since 1985 and who are they?
+Solution:
+SELECT COUNT(first_name) FROM employees WHERE hire_date > '1985-01-01';
+SELECT first_name, last_name FROM employees WHERE hire_date > '1985-01-01'; 
+
+5. Report:
+How many employees got hired from 1990 until 1997 and who are they?
+Solution:
+SELECT COUNT(first_name) FROM employees WHERE hire_date BETWEEN '1990-01-01' AND '1990-01-01'; 
+SELECT first_name, last_name FROM employees WHERE hire_date BETWEEN '1990-01-01' AND '1990-01-01';
+
+6. Report:
+How many employees have salaries higher than EUR 70 000,00 and who are they? 
+Solution: 
+SELECT salaries.salary, employees.first_name, employees.last_name FROM salaries INNER JOIN employees ON salaries.emp_no = employees.emp_no WHERE salaries.salary > '70000' 
+
+ 7. Report:
+ How many employees do we have in the Research Department, who are working for us since 1992 and who are they?
+Solution:
+SELECT DISTINCT first_name, last_name, hire_date,  from employees INNER JOIN departments WHERE hire_date > "1992-01-01" AND dept_name LIKE "R%"
+SELECT COUNT(first_name) from employees inner join departments WHERE hire_date > "1992-01-01" AND dept_name LIKE "R%" 
+
+
+ 8. Report:
+ How many employees do we have in the Finance Department, who are working for us since 1985 until now and who have salaries higher than EUR 75 000,00 - who are they?
+Solution:
+
+ 9. Report:
+ We need a table with employees, who are working for us at this moment: first and last name, date of birth, gender, hire_date, title and salary.
+Solution: 
+SELECT 
+employees.first_name, 
+employees.last_name, 
+employees.birth_date,
+employees.gender,
+employees.hire_date,
+title,
+salary 
+FROM employees JOIN titles ON titles.emp_no = employees.emp_no
+JOIN salaries ON salaries.emp_no = employees.emp_no 
+
+10. Report:
+ We need a table with managers, who are working for us at this moment: first and last name, date of birth, gender, hire_date, title, department name and salary.
+
+SELECT * FROM `employees` 
+JOIN salaries ON employees.emp_no = salaries.emp_no
+JOIN titles ON employees.emp_no = titles.emp_no
+JOIN dept_manager ON employees.emp_no = dept_manager.emp_no
+JOIN departments ON departments.dept_no = dept_manager.dept_no
+WHERE titles.title = "manager" AND dept_manager.to_date <= NOW()
+GROUP BY employees.emp_no
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
